@@ -101,20 +101,20 @@
             button1.innerHTML = 'Generate Again'
 
             //console.log(greaterLesserThen)
-            if (greaterLesserThen == '<' && rngNum1 < rngNum2 ||
-                greaterLesserThen == '=' && rngNum1 == rngNum2 ||
-                greaterLesserThen == '>' && rngNum1 > rngNum2) {
+            if (greaterLesserThen === '<' && rngNum1 < rngNum2 ||
+                greaterLesserThen === '=' && rngNum1 === rngNum2 ||
+                greaterLesserThen === '>' && rngNum1 > rngNum2) {
                 score++;
                 pointsNumber.innerHTML = "Points: " + score;
                 console.log(score);
 
             }
-            else if (greaterLesserThen != '<' || greaterLesserThen != '=' || greaterLesserThen != '>') {
+            /*else if (greaterLesserThen != '<' || greaterLesserThen != '=' || greaterLesserThen != '>') {
                 alert('Use only < = > ')
                 console.log(greaterLesserThen)
                 button1.disabled = false;
-                button1.innerHTML = 'Submit Answer'
-            }
+                button1.innerHTML = 'Submit Answer'*/
+            
             else if (score <= 0) {
                 console.log(score)
                 score = 0
@@ -122,8 +122,9 @@
             }
 
             else {
-                score--
-                pointsNumber.innerHTML = "Points: " + score;
+                alert('Wrong, try again')
+                button1.disabled = false;
+                button1.innerHTML = 'Submit Answer'
             }
             
             
