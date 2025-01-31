@@ -12,12 +12,18 @@
             border: 2px, solid, gray;
             width: 30px;
             height: 40px;
-            margin: 20px;
+            margin: 10px;
             align-items: center;
             justify-content: center;
             text-align: center;
             align-content: center;
         }
+
+        #rngNumber1,
+        #rngNumber2 {
+            background-color: lightblue;
+        }
+
         .game {
             display: grid;
             grid-template-rows: repeat(3, 1fr);
@@ -26,81 +32,101 @@
             justify-items: center;
             justify-content: center;
             background-color: lightgray;
-            width: 42%;
-            height: 42%;
-            
+            width: fit-content;
+            height: fit-content;
+
         }
+
         .crocodile {
-            width: 400px;
-            height: 200px;
+            max-width: 80%;
+            max-height: 80%;
             grid-area: 1 / 1 / 2 / 7;
         }
-        .number1 { 
+
+        .number1 {
             grid-area: 2 / 1 / 3 / 3;
         }
+
         .number2 {
-            grid-area: 2 / 5 / 3 / 7; 
+            grid-area: 2 / 5 / 3 / 7;
         }
+
         .biggerOrLesser {
-            grid-area: 2 / 3 / 3 / 5; 
+            grid-area: 2 / 3 / 3 / 5;
         }
-        .btn1{
+
+        #btn1 {
             grid-area: 3 / 3 / 4 / 4;
             margin: 10px;
         }
-        .btn2 {
+
+        #btn2 {
             grid-area: 3/ 4 / 4 / 5;
         }
-        
     </style>
 </head>
 
 <body>
     <div id="points">Points: </div>
     <div class="game">
-        <img class="crocodile" src="/pictures/6b0bd34e1a056f39e1e5481b117d878f46347dab-1200x600.avif" alt="">
+        <img class="crocodile" src="pictures/6b0bd34e1a056f39e1e5481b117d878f46347dab-1200x600.avif" alt="">
         <div id="rngNumber1" class="number1"> </div>
         <input id="inputId" type="text" class="biggerOrLesser">
         <div id="rngNumber2" class="number2"></div>
-        <button class="btn1" onclick="isItCorrect()">Submit Answer</button>
-        <button class="btn2" onclick="generateNumber()">Generate Number</button>
+        <button id="btn1" onclick="isItCorrect()">Submit Answer</button>
+        <button id="btn2" onclick="generateNumber()">Generate Number</button>
     </div>
-   
+
 
     <script>
         let rngNum1 = 0;
         let rngNum2 = 0;
         let score = 0;
+        let greaterLesserThen;
+        const pointsNumber = document.getElementById('points');
+        const button1 = document.getElementById('btn1')
 
         function generateNumber() {
             rngNum1 = Math.floor(Math.random() * 10);
             rngNum2 = Math.floor(Math.random() * 10);
             document.getElementById('rngNumber1').innerHTML = rngNum1;
             document.getElementById('rngNumber2').innerHTML = rngNum2;
+            button1.disabled = false;
+            button1.innerHTML = 'Submit Answer'
         }
 
         function isItCorrect() {
-            var greatLessThen = document.getElementById('inputId').value;
+            greaterLesserThen = document.getElementById('inputId').value;
+            button1.disabled = true;
+            button1.innerHTML = 'Generate Again'
 
-            if (greatLessThen == '<' && rngNum1 < rngNum2 || 
-                greatLessThen == '=' && rngNum1 == rngNum2 || 
-                greatLessThen == '>' && rngNum1 > rngNum2) {
+            //console.log(greaterLesserThen)
+            if (greaterLesserThen == '<' && rngNum1 < rngNum2 ||
+                greaterLesserThen == '=' && rngNum1 == rngNum2 ||
+                greaterLesserThen == '>' && rngNum1 > rngNum2) {
                 score++;
-                document.getElementById('points').innerHTML = "Points: " + score;
+                pointsNumber.innerHTML = "Points: " + score;
                 console.log(score);
 
+            }
+            else if (greaterLesserThen != '<' || greaterLesserThen != '=' || greaterLesserThen != '>') {
+                alert('Use only < = > ')
+                console.log(greaterLesserThen)
+                button1.disabled = false;
+                button1.innerHTML = 'Submit Answer'
             }
             else if (score <= 0) {
                 console.log(score)
                 score = 0
-                document.getElementById('points').innerHTML = 'Points :' + score;
+                pointsNumber.innerHTML = 'Points :' + score;
             }
+
             else {
                 score--
-                document.getElementById('points').innerHTML = "Points: " + score;
+                pointsNumber.innerHTML = "Points: " + score;
             }
-            console.log(rngNum1, rngNum2, greatLessThen)
-            generateNumber();
+            
+            
         }
 
     </script>
