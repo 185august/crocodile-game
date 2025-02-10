@@ -78,8 +78,8 @@
         let button1Text = 'Submit Answer';
         let button2Text = 'Generate numbers';
         let buttonEnabled = false;
-        let rngNum1 = 0;
-        let rngNum2 = 0;
+        let rngNum1 = '';
+        let rngNum2 = '';
         let score = 0;
         let greaterLesserThen;
         const pointsNumber = document.getElementById('points');
@@ -138,8 +138,7 @@
 
             else {
                 alert('Wrong, try again')
-
-                button1Text = 'Submit Answer'
+                button1.disabled = false;
                 showView();
             }
         }
