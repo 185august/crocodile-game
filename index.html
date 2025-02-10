@@ -64,24 +64,20 @@
             display: flex;
             cursor: pointer;
             user-select: none;
-            
+
+
         }
     </style>
 </head>
 
-<body onload="whatever()">
-    <div id="points">Points: </div>
-    <div class="game">
-        <img class="crocodile" src="pictures/6b0bd34e1a056f39e1e5481b117d878f46347dab-1200x600.avif" alt="">
-        <div id="rngNumber1" class="number1"> </div>
-        <input id="inputId" type="text" class="biggerOrLesser">
-        <div id="rngNumber2" class="number2"></div>
-        <div id="answers"></div>
-        <button id="btn1" onclick="isItCorrect()">Submit Answer</button>
-        <button id="btn2" onclick="generateNumber()">Generate Number</button>
-    </div>
+<body onload="">
+    <div id="app"></div>
+
 
     <script>
+        let button1Text = 'Submit Answer';
+        let button2Text = 'Generate numbers';
+        let buttonEnabled = false;
         let rngNum1 = 0;
         let rngNum2 = 0;
         let score = 0;
@@ -89,26 +85,45 @@
         const pointsNumber = document.getElementById('points');
         const button1 = document.getElementById('btn1')
 
+        showView()
+        function showView() {
+            let html = /*HTML*/ `
+            <div id="points">Points: ${score} </div>
+        <div class="game">
+            <img class="crocodile" src="pictures/6b0bd34e1a056f39e1e5481b117d878f46347dab-1200x600.avif" alt="">
+            <div id="rngNumber1" class="number1"> ${rngNum1}</div>
+            <input id="inputId" type="text" class="biggerOrLesser">
+            <div id="rngNumber2" class="number2">${rngNum2}</div>
+            <div id="answers"></div>
+            <button id="btn1" 
+            ${buttonEnabled ? 'onclick="isItCorrect()"' : 'style="opacity: 0%"'}>${button1Text}</button>
+            <button id="btn2" onclick="generateNumber()">${button2Text}</button>
+        </div>
+            `
+            document.getElementById('app').innerHTML = html;
+        }
+
         function generateNumber() {
             rngNum1 = Math.floor(Math.random() * 10);
             rngNum2 = Math.floor(Math.random() * 10);
-            document.getElementById('rngNumber1').innerHTML = rngNum1;
-            document.getElementById('rngNumber2').innerHTML = rngNum2;
-            button1.disabled = false;
-            button1.innerHTML = 'Submit Answer';
+            button1Text = 'Submit Answer';
+            buttonEnabled = true;
+            //button1.disabled = false;
+            //button1.innerHTML = 'Submit Answer';
+            showView();
         }
 
         function isItCorrect() {
             greaterLesserThen = document.getElementById('inputId').value;
-            button1.disabled = true;
-            button1.innerHTML = 'Generate Again'
+            buttonEnabled = false;
+            button1Text = 'Generate Again'
 
             //console.log(greaterLesserThen)
             if (greaterLesserThen === '<' && rngNum1 < rngNum2 ||
                 greaterLesserThen === '=' && rngNum1 === rngNum2 ||
                 greaterLesserThen === '>' && rngNum1 > rngNum2) {
                 score++;
-                pointsNumber.innerHTML = "Points: " + score;
+                showView();
                 console.log(score);
 
             }
@@ -127,32 +142,14 @@
 
             else {
                 alert('Wrong, try again')
-                button1.disabled = false;
-                button1.innerHTML = 'Submit Answer'
+
+                button1Text = 'Submit Answer'
+                showView();
             }
         }
         function enterSign(sign) {
             document.getElementById('inputId').value = sign;
-
-        }
-
-        function whatever() {
-            button1.disabled = true;
-
-            document.getElementById('answers').innerHTML = /*HTML*/` 
-            
-            ${generateHTML('<')}
-            ${generateHTML('=')}
-            ${generateHTML('>')}
-    
-            `;
-        }
-        function generateHTML(answer) {
-            return  /*HTML*/`
-            <div class='signs' onclick="enterSign('${answer}')" >${answer} </div>
-            `
-        }
-
+        }   
     </script>
 
 </body>
