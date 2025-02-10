@@ -108,8 +108,6 @@
             rngNum2 = Math.floor(Math.random() * 10);
             button1Text = 'Submit Answer';
             buttonEnabled = true;
-            //button1.disabled = false;
-            //button1.innerHTML = 'Submit Answer';
             showView();
         }
 
@@ -117,8 +115,6 @@
             greaterLesserThen = document.getElementById('inputId').value;
             buttonEnabled = false;
             button1Text = 'Generate Again'
-
-            //console.log(greaterLesserThen)
             if (greaterLesserThen === '<' && rngNum1 < rngNum2 ||
                 greaterLesserThen === '=' && rngNum1 === rngNum2 ||
                 greaterLesserThen === '>' && rngNum1 > rngNum2) {
